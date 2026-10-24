@@ -391,7 +391,7 @@ footer strong{color:var(--pb-purple);}
         <div style="font-size:10px;color:#78350f;line-height:1.7;">
           • <strong>Inicial 30% o más</strong> → hasta <strong>48 cuotas</strong>, primeras <strong>18 SIN interés</strong> (resto TEA 22%)<br>
           • <strong>Inicial 20% a 29.99%</strong> → hasta <strong>60 cuotas</strong>, primeras <strong>12 SIN interés</strong> (resto TEA 22%)<br>
-          • <strong>Inicial 10% a 19.99%</strong> → hasta <strong>84 cuotas</strong>, primeras <strong>6 SIN interés</strong> (resto TEA 22%)
+          • <strong>Inicial 10% a 19.99%</strong> → hasta <strong>72 cuotas (Brisas)</strong> / <strong>84 cuotas (Puerta del Mar)</strong>, primeras <strong>6 SIN interés</strong> (resto TEA 22%)
         </div>
       </div>
     </div>
@@ -664,7 +664,10 @@ function campanaCondiciones(pct){
   if(!campanaActiva) return null;
   if(pct>=0.30) return {maxMeses:48, siCuotas:18, label:'🎯 Campaña 2026-4 · 30%+ → hasta 48 cuotas, primeras 18 SIN interés'};
   if(pct>=0.20) return {maxMeses:60, siCuotas:12, label:'🎯 Campaña 2026-4 · 20-29.99% → hasta 60 cuotas, primeras 12 SIN interés'};
-  if(pct>=0.10) return {maxMeses:84, siCuotas:6, label:'🎯 Campaña 2026-4 · 10-19.99% → hasta 84 cuotas, primeras 6 SIN interés'};
+  if(pct>=0.10){
+    var maxT = activeProject==='bdn' ? 72 : 84; // BDN hasta 72, PDM hasta 84
+    return {maxMeses:maxT, siCuotas:6, label:'🎯 Campaña 2026-4 · 10-19.99% → hasta '+maxT+' cuotas, primeras 6 SIN interés'};
+  }
   return null;
 }
 // Calcula la cuota de un plazo bajo la campaña. Devuelve {cuota, cuota2, nSin, nCon} o null si el plazo excede el máximo.
