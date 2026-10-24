@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador de Cuotas · Portada Blanca</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pb-purple:#4519FF;--pb-dark:#22285D;--pb-aqua:#EBFFC4;
+  --bdn-navy:#073752;--bdn-teal:#3EB1C0;
+  --pdm-sky:#6AC3CC;--pdm-navy:#103652;
+  --green:#4caf50;--green-bg:#f0fff4;--green-border:#b2e8a0;
+  --blue-bg:#f4f6ff;--blue-border:#b8c4f5;
+  --warn:#e65100;--warn-bg:#fff3e0;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:#f0f2f5;min-height:100vh;}
+
+/* HEADER */
+header{background:var(--pb-dark);padding:18px 40px;display:flex;align-items:center;gap:16px;
+  box-shadow:0 4px 24px rgba(0,0,0,.25);position:relative;overflow:hidden;}
+header::before{content:'B';position:absolute;right:-20px;top:-30px;font-family:'Montserrat',sans-serif;
+  font-weight:900;font-size:160px;color:rgba(255,255,255,.04);line-height:1;pointer-events:none;}
+.logo-circle{width:48px;height:48px;border-radius:50%;background:var(--pb-purple);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Montserrat',sans-serif;font-weight:900;font-size:22px;color:white;flex-shrink:0;}
+.header-text h1{font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px;color:white;}
+.header-text p{font-size:12px;color:var(--pb-aqua);font-weight:300;letter-spacing:.5px;}
+
+main{max-width:920px;margin:36px auto;padding:0 20px 60px;}
+
+/* SELECTOR */
+.selector-section{background:white;border-radius:20px;padding:28px 32px;
+  box-shadow:0 8px 32px rgba(0,0,0,.08);margin-bottom:24px;}
+.selector-section h2{font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;
+  color:#999;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;}
+.project-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+.proj-tab{flex:1;min-width:170px;border:2px solid #e8e8e8;border-radius:14px;
+  padding:13px 16px;cursor:pointer;transition:all .2s;background:white;text-align:left;}
+.proj-tab:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.1);}
+.proj-tab .proj-name{font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:#333;display:block;margin-bottom:2px;}
+.proj-tab .proj-loc{font-size:11px;color:#999;}
+.proj-dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:6px;}
+.proj-tab.bdn-active{border-color:var(--bdn-teal);background:linear-gradient(135deg,#073752,#0a4a6e);}
+.proj-tab.bdn-active .proj-name{color:white;}
+.proj-tab.bdn-active .proj-loc{color:var(--bdn-teal);}
+.proj-tab.pdm-active{border-color:var(--pdm-sky);background:linear-gradient(135deg,#103652,#1a4d73);}
+.proj-tab.pdm-active .proj-name{color:white;}
+.proj-tab.pdm-active .proj-loc{color:var(--pdm-sky);}
+
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.field-wrap{display:flex;flex-direction:column;gap:6px;}
+.field-wrap label{font-family:'Montserrat',sans-serif;font-weight:600;font-size:11px;color:var(--pb-dark);letter-spacing:.5px;text-transform:uppercase;}
+select,input[type=number],input[type=text]{width:100%;padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;
+  border:2px solid #e8e8e8;border-radius:12px;background:#fafafa;color:var(--pb-dark);outline:none;transition:border-color .2s;}
+select{appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2322285D' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 13px center;background-size:15px;padding-right:40px;background-color:#fafafa;cursor:pointer;}
+select:focus,input:focus{border-color:var(--pb-purple);}
+input[type=number]::-webkit-inner-spin-button{opacity:.4;}
+
+.moneda-toggle{display:flex;border:2px solid #e8e8e8;border-radius:12px;overflow:hidden;}
+.mon-btn{flex:1;padding:10px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;
+  cursor:pointer;border:none;background:white;color:#bbb;transition:all .15s;letter-spacing:.5px;}
+.mon-btn.act-bdn{background:var(--bdn-navy);color:white;}
+.mon-btn.act-pdm{background:var(--pdm-navy);color:white;}
+
+/* CARD */
+#card-container{min-height:20px;}
+.lot-card{border-radius:20px;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,.14);animation:slideUp .3s ease;}
+@keyframes slideUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.card-bdn .card-header{background:linear-gradient(135deg,var(--bdn-navy),#0d4d70);padding:22px 30px 18px;position:relative;overflow:hidden;}
+.card-pdm .card-header{background:linear-gradient(135deg,var(--pdm-navy),#1d5a87);padding:22px 30px 18px;position:relative;overflow:hidden;}
+.card-bdn .card-header::after,.card-pdm .card-header::after{content:'';position:absolute;bottom:-25px;right:-25px;
+  width:100px;height:100px;border-radius:50%;}
+.card-bdn .card-header::after{background:var(--bdn-teal);opacity:.12;}
+.card-pdm .card-header::after{background:var(--pdm-sky);opacity:.14;}
+.card-badge{font-family:'Montserrat',sans-serif;font-weight:700;font-size:10px;letter-spacing:1px;
+  text-transform:uppercase;padding:4px 11px;border-radius:20px;display:inline-block;margin-bottom:8px;}
+.card-bdn .card-badge{background:var(--bdn-teal);color:var(--bdn-navy);}
+.card-pdm .card-badge{background:var(--pdm-sky);color:var(--pdm-navy);}
+.lote-id{font-family:'Montserrat',sans-serif;font-weight:900;font-size:42px;color:white;line-height:1;letter-spacing:-2px;}
+.card-bdn .lote-id span{color:var(--bdn-teal);}
+.card-pdm .lote-id span{color:var(--pdm-sky);}
+.proj-label{font-size:11px;color:rgba(255,255,255,.5);font-weight:300;margin-top:2px;}
+
+.card-body{background:white;padding:24px 30px;}
+
+/* SPECS */
+.specs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:16px;}
+.spec-item{background:#f7f9fc;border-radius:11px;padding:11px 13px;border-left:3px solid transparent;}
+.card-bdn .spec-item{border-left-color:var(--bdn-teal);}
+.card-pdm .spec-item{border-left-color:var(--pdm-sky);}
+.spec-label{font-size:9px;color:#bbb;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px;}
+.spec-value{font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--pb-dark);}
+
+/* PRECIO ÚNICO EN MONEDA ELEGIDA */
+.precio-contado{border-radius:14px;padding:16px 20px;text-align:center;margin-bottom:20px;}
+.precio-contado.moneda-pen{background:#f0f2f5;color:var(--pb-dark);}
+.precio-contado.moneda-usd{background:var(--pb-dark);color:white;}
+.pc-label{font-size:10px;font-weight:400;letter-spacing:1px;text-transform:uppercase;opacity:.65;margin-bottom:4px;}
+.pc-amount{font-family:'Montserrat',sans-serif;font-weight:900;font-size:28px;line-height:1;}
+.pc-note{font-size:9px;opacity:.5;margin-top:3px;letter-spacing:.5px;}
+
+/* UBICACION */
+.ubicacion-tag{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;
+  font-size:11px;font-weight:600;margin-bottom:14px;}
+.card-bdn .ubicacion-tag{background:rgba(62,177,192,.1);color:var(--bdn-navy);border:1px solid var(--bdn-teal);}
+.card-pdm .ubicacion-tag{background:rgba(106,195,204,.1);color:var(--pdm-navy);border:1px solid var(--pdm-sky);}
+.ubicacion-tag svg{width:12px;height:12px;}
+
+/* SEPARADOR */
+.fin-sep{border-top:2px dashed #eee;padding-top:18px;margin-top:2px;}
+.fin-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:11px;letter-spacing:1.5px;
+  text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.card-bdn .fin-title{color:var(--bdn-navy);}
+.card-pdm .fin-title{color:var(--pdm-navy);}
+.fin-title::after{content:'';flex:1;height:1px;background:#eee;}
+
+/* INICIAL */
+.ini-section{background:#f7f9fc;border-radius:14px;padding:16px 18px;margin-bottom:14px;}
+.ini-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.ini-input-wrap{position:relative;flex:1;min-width:160px;}
+.ini-sym{position:absolute;left:13px;top:50%;transform:translateY(-50%);
+  font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;color:var(--pb-dark);}
+.ini-input-wrap input{padding-left:34px;}
+.pct-pill{border-radius:10px;padding:10px 14px;font-family:'Montserrat',sans-serif;font-weight:800;
+  font-size:15px;white-space:nowrap;text-align:center;min-width:64px;}
+.pct-pill.ok-bdn{background:var(--bdn-navy);color:white;}
+.pct-pill.ok-pdm{background:var(--pdm-navy);color:white;}
+.pct-pill.warn{background:var(--warn);color:white;}
+.pct-pill.neutral{background:#ddd;color:#999;}
+
+.regla-tag{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;
+  font-size:10px;font-weight:600;margin-top:9px;}
+.regla-tag.nv0{background:var(--warn-bg);color:var(--warn);border:1.5px solid #ffcc80;}
+.regla-tag.nv1{background:#e8f5e9;color:#2e7d32;border:1.5px solid #a5d6a7;}
+.regla-tag.nv2{background:#e3f2fd;color:#1565c0;border:1.5px solid #90caf9;}
+.regla-tag.nv3{background:#ede7f6;color:#4527a0;border:1.5px solid #ce93d8;}
+
+/* FRACCIONAR */
+.frac-wrap{margin-top:11px;background:white;border-radius:10px;padding:12px 14px;}
+.frac-label{font-size:11px;color:#888;margin-bottom:8px;}
+.frac-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;}
+.frac-btn{padding:5px 10px;border-radius:7px;border:1.5px solid #ddd;
+  font-family:'Montserrat',sans-serif;font-weight:600;font-size:11px;
+  cursor:pointer;background:white;color:#999;transition:all .15s;}
+.frac-btn:hover{border-color:var(--pb-dark);color:var(--pb-dark);}
+.frac-btn.sel-bdn{background:var(--bdn-teal);border-color:var(--bdn-teal);color:var(--bdn-navy);}
+.frac-btn.sel-pdm{background:var(--pdm-sky);border-color:var(--pdm-sky);color:var(--pdm-navy);}
+.frac-result{display:flex;justify-content:space-between;align-items:center;
+  background:#f7f9fc;border-radius:8px;padding:8px 12px;margin-top:6px;}
+.frac-result .fl{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.6px;}
+.frac-result .fv{font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;color:var(--pb-dark);}
+
+/* SALDO */
+.saldo-bar{border-radius:10px;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
+.card-bdn .saldo-bar{background:var(--bdn-navy);}
+.card-pdm .saldo-bar{background:var(--pdm-navy);}
+.saldo-bar .sl{font-size:10px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.6px;}
+.saldo-bar .sv{font-family:'Montserrat',sans-serif;font-weight:800;font-size:17px;color:white;}
+
+/* PLANES */
+.planes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
+.plan-card{border-radius:14px;padding:16px 18px;border:2px solid #eee;}
+.plan-card.si{background:var(--green-bg);border-color:var(--green-border);}
+.plan-card.ci{background:var(--blue-bg);border-color:var(--blue-border);}
+.plan-card.disabled{opacity:.38;pointer-events:none;}
+.plan-badge{display:inline-block;border-radius:20px;padding:3px 10px;
+  font-family:'Montserrat',sans-serif;font-weight:700;font-size:10px;letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px;}
+.si .plan-badge{background:var(--green-border);color:#2d6a1a;}
+.ci .plan-badge{background:var(--blue-border);color:#22285D;}
+
+/* INPUT CUOTAS PLAN */
+.plan-cuotas-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.plan-cuotas-row label{font-size:11px;color:#888;white-space:nowrap;}
+.plan-cuotas-row input{width:72px;padding:6px 10px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;
+  border:1.5px solid #ddd;border-radius:8px;background:white;color:var(--pb-dark);outline:none;text-align:center;}
+.si input:focus{border-color:var(--green);}
+.ci input:focus{border-color:var(--pb-purple);}
+.plan-cuotas-row .max-hint{font-size:9px;color:#bbb;}
+
+.cuota-result{text-align:center;}
+.cuota-lbl{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px;}
+.cuota-val{font-family:'Montserrat',sans-serif;font-weight:900;font-size:22px;color:var(--pb-dark);}
+.cuota-sub{font-size:10px;color:#888;margin-top:2px;}
+.plan-note{font-size:10px;color:#aaa;text-align:center;font-style:italic;}
+
+/* AVISO */
+.aviso{background:var(--warn-bg);border:1.5px solid #ffcc80;border-radius:10px;
+  padding:10px 14px;font-size:11px;color:var(--warn);margin-top:10px;font-weight:500;}
+
+/* BOTÓN EXPORTAR */
+.export-bar{text-align:center;margin-top:20px;}
+.btn-export{background:var(--pb-purple);color:white;border:none;border-radius:14px;
+  padding:14px 32px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;
+  cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;
+  box-shadow:0 6px 20px rgba(69,25,255,.3);}
+.btn-export:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(69,25,255,.4);}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:40px 20px;color:#ccc;}
+.empty-state svg{opacity:.3;margin-bottom:12px;}
+.empty-state p{font-size:14px;}
+
+footer{text-align:center;font-size:11px;color:#bbb;margin-top:40px;letter-spacing:.5px;}
+footer strong{color:var(--pb-purple);}
+
+/* ══════════════════════════════════════
+   PDF TEMPLATE (oculto en pantalla)
+══════════════════════════════════════ */
+#pdf-template{display:none;}
+.pdf-page{width:210mm;min-height:297mm;background:white;font-family:'DM Sans',sans-serif;
+  padding:14mm 16mm;box-sizing:border-box;color:#1a1a2e;}
+
+/* PDF header */
+.pdf-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8mm;
+  padding-bottom:6mm;border-bottom:3px solid #22285D;}
+.pdf-logo-area{}
+.pdf-logo-circle{width:44px;height:44px;border-radius:50%;background:#4519FF;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:'Montserrat',sans-serif;font-weight:900;font-size:20px;color:white;vertical-align:middle;margin-right:8px;}
+.pdf-brand{font-family:'Montserrat',sans-serif;font-weight:900;font-size:20px;color:#22285D;vertical-align:middle;}
+.pdf-brand-sub{font-size:10px;color:#888;margin-top:2px;}
+.pdf-meta{text-align:right;font-size:10px;color:#888;line-height:1.7;}
+.pdf-meta strong{color:#22285D;font-size:11px;}
+.pdf-title-bar{background:#22285D;color:white;border-radius:10px;padding:10px 18px;margin-bottom:6mm;
+  font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;letter-spacing:.5px;}
+.pdf-lote-badge{display:inline-block;border-radius:20px;padding:3px 12px;margin-left:10px;
+  font-size:11px;font-weight:700;letter-spacing:.5px;vertical-align:middle;}
+
+/* PDF sections */
+.pdf-grid2{display:grid;grid-template-columns:1fr 1fr;gap:5mm;margin-bottom:5mm;}
+.pdf-box{border-radius:8px;padding:10px 14px;}
+.pdf-box.gray{background:#f5f5f5;}
+.pdf-box.dark{background:#22285D;color:white;}
+.pdf-box.bdn{background:#073752;color:white;}
+.pdf-box.pdm{background:#103652;color:white;}
+.pdf-box.green{background:#f0fff4;border:1.5px solid #b2e8a0;}
+.pdf-box.blue{background:#f4f6ff;border:1.5px solid #b8c4f5;}
+.pdf-box-label{font-size:9px;text-transform:uppercase;letter-spacing:.8px;opacity:.6;margin-bottom:3px;}
+.pdf-box-val{font-family:'Montserrat',sans-serif;font-weight:800;font-size:17px;}
+.pdf-box-sub{font-size:9px;opacity:.6;margin-top:2px;}
+.pdf-divider{border:none;border-top:1.5px dashed #ddd;margin:5mm 0;}
+.pdf-section-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:11px;
+  letter-spacing:1.5px;text-transform:uppercase;color:#22285D;margin-bottom:4mm;
+  display:flex;align-items:center;gap:6px;}
+.pdf-section-title::after{content:'';flex:1;height:1px;background:#ddd;}
+.pdf-ini-row{display:flex;justify-content:space-between;align-items:center;
+  background:#f5f5f5;border-radius:8px;padding:8px 14px;margin-bottom:3mm;}
+.pdf-ini-row .pil{font-size:10px;color:#888;}
+.pdf-ini-row .piv{font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;color:#22285D;}
+.pdf-saldo{border-radius:8px;padding:9px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:5mm;}
+.pdf-saldo .sl{font-size:10px;color:rgba(255,255,255,.6);}
+.pdf-saldo .sv{font-family:'Montserrat',sans-serif;font-weight:900;font-size:17px;color:white;}
+.pdf-planes{display:grid;grid-template-columns:1fr 1fr;gap:4mm;margin-bottom:5mm;}
+.pdf-plan{border-radius:8px;padding:10px 14px;}
+.pdf-plan-badge{font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:6px;}
+.pdf-plan .pl{font-size:9px;color:#888;text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px;margin-top:8px;}
+.pdf-plan .pv{font-family:'Montserrat',sans-serif;font-weight:900;font-size:18px;color:#22285D;}
+.pdf-plan .ps{font-size:9px;color:#888;margin-top:1px;}
+
+/* PDF footer */
+.pdf-footer{margin-top:auto;padding-top:6mm;border-top:1.5px solid #eee;
+  display:flex;justify-content:space-between;align-items:flex-end;}
+.pdf-footer-left{font-size:9px;color:#888;line-height:1.8;}
+.pdf-footer-left strong{color:#22285D;}
+.pdf-validez{background:#f5f5f5;border-radius:8px;padding:8px 14px;text-align:center;}
+.pdf-validez .vl{font-size:9px;color:#aaa;text-transform:uppercase;letter-spacing:.6px;}
+.pdf-validez .vd{font-family:'Montserrat',sans-serif;font-weight:800;font-size:13px;color:#22285D;margin-top:2px;}
+.pdf-asterisco{background:#fff3e0;border:1px solid #ffcc80;border-radius:7px;
+  padding:6px 12px;font-size:9px;color:#e65100;margin-top:4mm;line-height:1.5;}
+
+@media(max-width:580px){
+  header{padding:14px 20px;}
+  main{margin:14px auto;}
+  .selector-section{padding:16px 18px;}
+  .row2{grid-template-columns:1fr;}
+  .planes-grid{grid-template-columns:1fr;}
+  .lote-id{font-size:32px;}
+  .card-body{padding:16px 18px;}
+}
+</style>
+<style>
+  .sim-meses-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+  .mes-tab{padding:6px 12px;border-radius:8px;border:1.5px solid #e0e0e0;background:white;
+    font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;color:#888;cursor:pointer;transition:all .15s;}
+  .mes-tab.sel-bdn{background:var(--bdn-navy);border-color:var(--bdn-navy);color:white;}
+  .mes-tab.sel-pdm{background:var(--pdm-navy);border-color:var(--pdm-navy);color:white;}
+  .opcion-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+  .opcion-badge{font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;
+    background:#e8e8f0;color:var(--pb-dark);border-radius:20px;padding:4px 12px;white-space:nowrap;}
+  .opcion-result{flex:1;min-width:160px;background:#f4f6ff;border:1.5px solid #b8c4f5;border-radius:10px;
+    padding:8px 14px;display:flex;justify-content:space-between;align-items:center;}
+  .opcion-result .cuota{font-family:'Montserrat',sans-serif;font-weight:900;font-size:18px;color:var(--pb-dark);}
+  .opcion-result .meses-lbl{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.5px;}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-text">PORTADA BLANCA</div>
+      <div class="logo-sub">Simulador de Cuotas</div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="selector-section">
+    <h2>Proyecto y Lote</h2>
+    <div class="project-tabs">
+      <div class="proj-tab" id="tab-bdn" onclick="selectProject('bdn')">
+        <span class="proj-dot" style="background:var(--bdn-teal)"></span>
+        <span class="proj-name">Brisas de Naylamp</span>
+        <div class="proj-loc">📍 Lambayeque</div>
+      </div>
+      <div class="proj-tab" id="tab-pdm" onclick="selectProject('pdm')">
+        <span class="proj-dot" style="background:var(--pdm-sky)"></span>
+        <span class="proj-name">Puerta del Mar</span>
+        <div class="proj-loc">📍 Pimentel</div>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field-wrap">
+        <label>Moneda de cotización</label>
+        <div class="moneda-toggle">
+          <button class="mon-btn" id="btn-pen" onclick="setMoneda('PEN')">S/ SOLES</button>
+          <button class="mon-btn" id="btn-usd" onclick="setMoneda('USD')">$ DÓLARES</button>
+        </div>
+      </div>
+      <div class="field-wrap">
+        <label>Asesor Inmobiliario</label>
+        <select id="vendedor-select">
+          <option value="">— Selecciona el asesor —</option>
+          <option value="FERNANDEZ FRIAS MARIA DEYSI|921335028">Fernandez Frias Maria Deysi</option>
+          <option value="HUANCAS MUÑOZ MARIA KATHIA|932543587">Huancas Muñoz Maria Kathia</option>
+          <option value="MEJIA CORTEZ MIRKO DAZU|956703298">Mejia Cortez Mirko Dazu</option>
+          <option value="CHERO GASTULO JULIO ABEL|932475864">Chero Gastulo Julio Abel</option>
+          <option value="JOSE LUIS PALACIOS|954156896">Jose Luis Palacios</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top:12px;">
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+        <input type="checkbox" id="chk-etapa1" onchange="toggleEtapa1(this)"
+          style="width:18px;height:18px;cursor:pointer;accent-color:#d97706;">
+        <div>
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;color:#d97706;">
+            🔓 Desbloquear 1era etapa (Puerta del Mar)
+          </div>
+          <div style="font-size:10px;color:#aaa;margin-top:2px;">
+            Permite visualizar y simular los lotes de la primera etapa
+          </div>
+        </div>
+      </label>
+      <div id="etapa1-badge" style="display:none;margin-top:6px;background:#fffbeb;border:1.5px solid #d97706;border-radius:10px;padding:8px 14px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:15px;">🔓</span>
+          <div style="flex:1;font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;color:#d97706;">1era etapa desbloqueada</div>
+          <button onclick="desactivarEtapa1()" style="padding:4px 10px;border-radius:7px;border:1.5px solid #d97706;background:white;color:#d97706;font-size:10px;font-family:'Montserrat',sans-serif;font-weight:700;cursor:pointer;">✕</button>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:16px;border-top:1px dashed #e0e0e0;padding-top:14px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <span style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;color:var(--pb-dark);text-transform:uppercase;letter-spacing:.5px;">Lotes a cotizar (hasta 3)</span>
+        <button onclick="addLoteSlot()" id="btn-add-lote"
+          style="padding:6px 14px;border-radius:8px;border:1.5px solid var(--pb-purple);background:white;
+          color:var(--pb-purple);font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;cursor:pointer;">
+          + Agregar lote
+        </button>
+      </div>
+      <div id="lotes-slots"></div>
+    </div>
+    <div style="margin-top:14px;border-top:1px dashed #e0e0e0;padding-top:14px;">
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;background:linear-gradient(135deg,#fef3c7,#fde68a);border:2px solid #f59e0b;border-radius:12px;padding:12px 14px;">
+        <input type="checkbox" id="chk-campana" onchange="toggleCampana(this)"
+          style="width:20px;height:20px;cursor:pointer;accent-color:#d97706;">
+        <div>
+          <div style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:14px;color:#b45309;letter-spacing:.3px;">
+            🎯 CAMPAÑA 2026-4
+          </div>
+          <div style="font-size:11px;color:#92400e;margin-top:2px;line-height:1.4;">
+            Financiamiento sin interés según inicial. Aplica a Brisas de Naylamp y Puerta del Mar.
+          </div>
+        </div>
+      </label>
+      <div id="campana-badge" style="display:none;margin-top:8px;background:#fffbeb;border:1.5px solid #f59e0b;border-radius:10px;padding:10px 14px;">
+        <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;color:#b45309;margin-bottom:6px;">🎯 Campaña 2026-4 activa · condiciones:</div>
+        <div style="font-size:10px;color:#78350f;line-height:1.7;">
+          • <strong>Inicial 30% o más</strong> → hasta <strong>48 cuotas</strong>, primeras <strong>18 SIN interés</strong> (resto TEA 22%)<br>
+          • <strong>Inicial 20% a 29.99%</strong> → hasta <strong>60 cuotas</strong>, primeras <strong>12 SIN interés</strong> (resto TEA 22%)<br>
+          • <strong>Inicial 10% a 19.99%</strong> → hasta <strong>84 cuotas</strong>, primeras <strong>6 SIN interés</strong> (resto TEA 22%)
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="card-container">
+    <div class="empty-state">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <p>Elige un proyecto y agrega lotes para simular cuotas</p>
+    </div>
+  </div>
+  <footer>
+    <strong>Portada Blanca</strong> · Cl. Izaga N°778, Chiclayo · Cl. Bolívar N°306, Ferreñafe<br>
+    932 543 587 / 932 475 864 · "La puerta de ingreso a tu felicidad"
+  </footer>
+</main>
+
+<script>
+const DATA={
+  bdn:{name:"Brisas de Naylamp",location:"Lambayeque",theme:"bdn",
+    lots:[
+      {id:"A1",area:305.51,obs:"CERCA AV INGRESO",usd:24080,pen:84278},
+      {id:"A2",area:300.79,obs:"CERCA AV INGRESO",usd:23632,pen:82712},
+      {id:"A3",area:303.66,obs:"CERCA AV INGRESO",usd:23872,pen:83552},
+      {id:"A4",area:320.52,obs:"CERCA AV INGRESO",usd:25283,pen:88488},
+      {id:"A8",area:309.97,obs:"—",usd:24098,pen:84340},
+      {id:"B4",area:300,obs:"CERCA AV INGRESO",usd:24058,pen:84200},
+      {id:"B8",area:325.96,obs:"—",usd:25612,pen:89639},
+      {id:"B9",area:355.39,obs:"—",usd:27822,pen:97376},
+      {id:"B10",area:300,obs:"—",usd:23486,pen:82200},
+      {id:"B11",area:300,obs:"—",usd:23486,pen:82200},
+      {id:"B13",area:300,obs:"CERCA AV INGRESO",usd:23486,pen:82200},
+      {id:"B16",area:300,obs:"ESQUINA AV INGRESO",usd:24200,pen:84700},
+      {id:"C3",area:300,obs:"B CERCA AV INGRESO",usd:23772,pen:83200},
+      {id:"C6",area:300,obs:"—",usd:23629,pen:82700},
+      {id:"C7",area:300,obs:"—",usd:23629,pen:82700},
+      {id:"C8",area:329.38,obs:"—",usd:25747,pen:90112},
+      {id:"C9",area:308.2,obs:"—",usd:24133,pen:84465},
+      {id:"C10",area:300,obs:"—",usd:23629,pen:82700},
+      {id:"C11",area:300,obs:"—",usd:23629,pen:82700},
+      {id:"C12",area:300,obs:"—",usd:23629,pen:82700},
+      {id:"C14",area:300,obs:"B CERCA AV INGRESO",usd:23772,pen:83200},
+      {id:"C15",area:300,obs:"B CERCA AV INGRESO",usd:23772,pen:83200},
+      {id:"C16",area:300,obs:"ESQUINA AV INGRESO",usd:24200,pen:84700},
+      {id:"D1",area:340,obs:"ESQUINA AV INGRESO",usd:27403,pen:95910},
+      {id:"D2",area:340,obs:"B CERCA AV INGRESO",usd:26932,pen:94260},
+      {id:"D3",area:340,obs:"B CERCA AV INGRESO",usd:26932,pen:94260},
+      {id:"D4",area:340,obs:"B CERCA AV INGRESO",usd:26715,pen:93500},
+      {id:"D5",area:340,obs:"—",usd:26618,pen:93160},
+      {id:"D6",area:340,obs:"—",usd:26618,pen:93160},
+      {id:"D7",area:332.1,obs:"—",usd:26015,pen:91050},
+      {id:"D8",area:310.66,obs:"—",usd:24329,pen:85150},
+      {id:"D9",area:340,obs:"—",usd:26618,pen:93160},
+      {id:"D10",area:340,obs:"—",usd:26618,pen:93160},
+      {id:"D11",area:340,obs:"—",usd:26618,pen:93160},
+      {id:"D12",area:340,obs:"—",usd:26618,pen:93160},
+      {id:"D13",area:340,obs:"—",usd:26618,pen:93160},
+      {id:"D14",area:340,obs:"ESQUINA AV INGRESO",usd:27403,pen:95910},
+      {id:"E2",area:347.08,obs:"—",usd:27172,pen:95100},
+      {id:"E3",area:304.85,obs:"—",usd:23648,pen:82768},
+      {id:"F1",area:350.43,obs:"—",usd:27434,pen:96018},
+      {id:"F2",area:301.45,obs:"—",usd:24063,pen:84221},
+      {id:"F3",area:300.87,obs:"—",usd:24061,pen:84213},
+      {id:"F4",area:307.34,obs:"—",usd:24087,pen:84303},
+      {id:"F5",area:335.48,obs:"—",usd:26342,pen:92197},
+      {id:"F7",area:343.88,obs:"—",usd:26996,pen:94485},
+      {id:"F9",area:300,obs:"—",usd:24058,pen:84200}
+    ]},
+  pdm:{name:"Puerta del Mar",location:"Pimentel",theme:"pdm",
+    lots:[
+      {etapa:1,id:"A2",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"A3",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"A4",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"A5",area:105,vista:"Calle",frente:7,largo:15,usd:38950,pen:136325},
+      {etapa:1,id:"A13",area:120,vista:"Esquina",frente:8,largo:15,usd:45200,pen:158200},
+      {etapa:1,id:"A14",area:105,vista:"Calle",frente:7,largo:15,usd:38950,pen:136325},
+      {etapa:1,id:"A15",area:105,vista:"Calle",frente:7,largo:15,usd:38950,pen:136325},
+      {etapa:1,id:"A16",area:105,vista:"Calle",frente:7,largo:15,usd:38950,pen:136325},
+      {etapa:1,id:"A17",area:105,vista:"Calle",frente:7,largo:15,usd:38950,pen:136325},
+      {etapa:1,id:"A18",area:105,vista:"Calle",frente:7,largo:15,usd:38950,pen:136325},
+      {etapa:1,id:"A19",area:105,vista:"Calle",frente:7,largo:15,usd:38950,pen:136325},
+      {etapa:1,id:"A20",area:105,vista:"Calle",frente:7,largo:15,usd:38950,pen:136325},
+      {etapa:1,id:"A21",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"A22",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"A23",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"B3",area:108,vista:"Calle",frente:6,largo:18,usd:42000,pen:147000},
+      {etapa:1,id:"B4",area:108,vista:"Calle",frente:6,largo:18,usd:42000,pen:147000},
+      {etapa:1,id:"B5",area:108,vista:"Calle",frente:6,largo:18,usd:42000,pen:147000},
+      {etapa:1,id:"B6",area:108,vista:"Calle",frente:6,largo:18,usd:40040,pen:140140},
+      {etapa:1,id:"B7",area:108,vista:"Calle",frente:6,largo:18,usd:40040,pen:140140},
+      {etapa:1,id:"B8",area:108,vista:"Calle",frente:6,largo:18,usd:40040,pen:140140},
+      {etapa:1,id:"B9",area:108,vista:"Calle",frente:6,largo:18,usd:40040,pen:140140},
+      {etapa:1,id:"B12",area:108,vista:"Calle",frente:6,largo:18,usd:40040,pen:140140},
+      {etapa:1,id:"B13",area:108,vista:"Calle",frente:6,largo:18,usd:40040,pen:140140},
+      {etapa:1,id:"C1",area:112.5,vista:"Esquina",frente:7.5,largo:15,usd:45750,pen:160125},
+      {etapa:1,id:"C2",area:117,vista:"Calle",frente:6,largo:19.5,usd:41300,pen:144550},
+      {etapa:1,id:"C3",area:117,vista:"Calle",frente:6,largo:19.5,usd:41300,pen:144550},
+      {etapa:1,id:"C4",area:117,vista:"Calle",frente:6,largo:19.5,usd:41300,pen:144550},
+      {etapa:1,id:"C5",area:117,vista:"Calle",frente:6,largo:19.5,usd:41300,pen:144550},
+      {etapa:1,id:"C9",area:120,vista:"Parque",frente:6,largo:20,usd:43000,pen:150500},
+      {etapa:1,id:"C10",area:120,vista:"Parque",frente:6,largo:20,usd:43000,pen:150500},
+      {etapa:1,id:"C15",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"D1",area:108,vista:"Esquina",frente:6,largo:18,usd:43000,pen:150500},
+      {etapa:1,id:"D2",area:108,vista:"Calle",frente:6,largo:18,usd:42000,pen:147000},
+      {etapa:1,id:"D3",area:108,vista:"Calle",frente:6,largo:18,usd:42000,pen:147000},
+      {etapa:1,id:"D4",area:108,vista:"Calle",frente:6,largo:18,usd:42000,pen:147000},
+      {etapa:1,id:"D5",area:108,vista:"Calle",frente:6,largo:18,usd:42000,pen:147000},
+      {etapa:1,id:"D6",area:108,vista:"Calle",frente:6,largo:18,usd:42000,pen:147000},
+      {etapa:1,id:"D7",area:108,vista:"Calle",frente:6,largo:18,usd:42000,pen:147000},
+      {etapa:1,id:"D8",area:108,vista:"Calle",frente:6,largo:18,usd:42000,pen:147000},
+      {etapa:1,id:"D10",area:107,vista:"Parque",frente:6,largo:18,usd:43300,pen:151550},
+      {etapa:1,id:"D11",area:108,vista:"Parque",frente:6,largo:18,usd:43300,pen:151550},
+      {etapa:1,id:"D12",area:108,vista:"Parque",frente:6,largo:18,usd:43300,pen:151550},
+      {etapa:1,id:"E9",area:128.8,vista:"Esquina",frente:8,largo:16.1,usd:52000,pen:182000},
+      {etapa:1,id:"F3",area:117,vista:"Parque",frente:6.5,largo:18,usd:44680,pen:156380},
+      {etapa:1,id:"F4",area:108,vista:"Parque",frente:6,largo:18,usd:41250,pen:144375},
+      {etapa:1,id:"F5",area:108,vista:"Calle",frente:6,largo:18,usd:40040,pen:140140},
+      {etapa:1,id:"F6",area:108,vista:"Calle",frente:6,largo:18,usd:40040,pen:140140},
+      {etapa:1,id:"F7",area:108,vista:"Calle",frente:6,largo:18,usd:40040,pen:140140},
+      {etapa:1,id:"F8",area:108,vista:"Calle",frente:6,largo:18,usd:40040,pen:140140},
+      {etapa:1,id:"F9",area:108,vista:"Calle",frente:6,largo:18,usd:40040,pen:140140},
+      {etapa:1,id:"F10",area:108,vista:"Calle",frente:6,largo:18,usd:40040,pen:140140},
+      {etapa:1,id:"F11",area:108,vista:"Calle",frente:6,largo:18,usd:40040,pen:140140},
+      {etapa:1,id:"F12",area:108,vista:"Calle",frente:6,largo:18,usd:40040,pen:140140},
+      {etapa:1,id:"F13",area:108,vista:"Calle",frente:6,largo:18,usd:40040,pen:140140},
+      {etapa:1,id:"G1",area:112.5,vista:"Esquina",frente:7.5,largo:15,usd:43720,pen:153020},
+      {etapa:1,id:"G2",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G3",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G5",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G6",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G7",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G8",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G9",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G10",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G11",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G12",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G14",area:119.31,vista:"Esquina",frente:10.75,largo:11.1,usd:48490,pen:169715},
+      {etapa:1,id:"G15",area:94.34,vista:"Calle",frente:8.5,largo:11.1,usd:35070,pen:122745},
+      {etapa:1,id:"G17",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G18",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G19",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G20",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G21",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G22",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G23",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G24",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G25",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G26",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G27",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G28",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
+      {etapa:1,id:"G29",area:112.5,vista:"Esquina",frente:7.5,largo:15,usd:43720,pen:153020},
+      {etapa:2,id:"H1",area:112.5,vista:"Esquina",frente:7.5,largo:15,usd:36560,pen:127960},
+      {etapa:2,id:"H2",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H3",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H4",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H5",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H6",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H7",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H8",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H18",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H19",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H20",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H21",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H22",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H23",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H24",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H25",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H26",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H27",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H28",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"H29",area:112.5,vista:"Esquina",frente:7.5,largo:15,usd:36560,pen:127960},
+      {etapa:2,id:"I4",area:108,vista:"Calle",frente:6,largo:18,usd:33650,pen:117775},
+      {etapa:2,id:"I5",area:108,vista:"Calle",frente:6,largo:18,usd:33650,pen:117775},
+      {etapa:2,id:"I6",area:108,vista:"Calle",frente:6,largo:18,usd:33650,pen:117775},
+      {etapa:2,id:"I7",area:108,vista:"Calle",frente:6,largo:18,usd:33650,pen:117775},
+      {etapa:2,id:"I8",area:108,vista:"Calle",frente:6,largo:18,usd:33650,pen:117775},
+      {etapa:2,id:"I9",area:108,vista:"Calle",frente:6,largo:18,usd:33650,pen:117775},
+      {etapa:2,id:"I10",area:108,vista:"Calle",frente:6,largo:18,usd:33650,pen:117775},
+      {etapa:2,id:"I11",area:108,vista:"Parque",frente:6,largo:18,usd:36250,pen:126875},
+      {etapa:2,id:"I12",area:108,vista:"Parque",frente:6,largo:18,usd:36250,pen:126875},
+      {etapa:2,id:"I13",area:108,vista:"Parque",frente:6,largo:18,usd:36250,pen:126875},
+      {etapa:2,id:"I14",area:108,vista:"Esquina",frente:6,largo:18,usd:36500,pen:127750},
+      {etapa:2,id:"J1",area:128.8,vista:"Esquina",frente:8,largo:16.1,usd:40186,pen:140650},
+      {etapa:2,id:"J2",area:96.6,vista:"Calle",frente:6,largo:16.1,usd:30100,pen:105350},
+      {etapa:2,id:"J6",area:96.6,vista:"Calle",frente:6,largo:16.1,usd:30100,pen:105350},
+      {etapa:2,id:"K2",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"K3",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"K4",area:108,vista:"Parque",frente:6,largo:18,usd:36250,pen:126875},
+      {etapa:2,id:"K5",area:108,vista:"Parque",frente:6,largo:18,usd:36250,pen:126875},
+      {etapa:2,id:"K6",area:108,vista:"Parque",frente:6,largo:18,usd:36250,pen:126875},
+      {etapa:2,id:"K7",area:108,vista:"Parque",frente:6,largo:18,usd:36250,pen:126875},
+      {etapa:2,id:"K8",area:108,vista:"Parque",frente:6,largo:18,usd:36250,pen:126875},
+      {etapa:2,id:"K9",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"K10",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"K11",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"K12",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"K13",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"K14",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"K15",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"K16",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"K17",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"K18",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"K19",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"K20",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"K21",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"K22",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"K23",area:135,vista:"Esquina",frente:7.5,largo:18,usd:43720,pen:153020},
+      {etapa:2,id:"L2",area:120,vista:"Parque",frente:6,largo:20,usd:39000,pen:136500},
+      {etapa:2,id:"L3",area:120,vista:"Parque",frente:6,largo:20,usd:39000,pen:136500},
+      {etapa:2,id:"L4",area:120,vista:"Parque",frente:6,largo:20,usd:39000,pen:136500},
+      {etapa:2,id:"L5",area:120,vista:"Parque",frente:6,largo:20,usd:39000,pen:136500},
+      {etapa:2,id:"L6",area:120,vista:"Parque",frente:6,largo:20,usd:39000,pen:136500},
+      {etapa:2,id:"L8",area:103.2,vista:"Calle",frente:6,largo:17.2,usd:32150,pen:112525},
+      {etapa:2,id:"L9",area:103.2,vista:"Calle",frente:6,largo:17.2,usd:32150,pen:112525},
+      {etapa:2,id:"L10",area:103.2,vista:"Calle",frente:6,largo:17.2,usd:32150,pen:112525},
+      {etapa:2,id:"L11",area:103.2,vista:"Calle",frente:6,largo:17.2,usd:32150,pen:112525},
+      {etapa:2,id:"L12",area:137.6,vista:"Esquina",frente:8,largo:17.2,usd:46010,pen:161035},
+      {etapa:2,id:"L13",area:120,vista:"Calle",frente:6,largo:20,usd:37350,pen:130725},
+      {etapa:2,id:"L14",area:120,vista:"Calle",frente:6,largo:20,usd:37350,pen:130725},
+      {etapa:2,id:"L15",area:120,vista:"Calle",frente:6,largo:20,usd:37350,pen:130725},
+      {etapa:2,id:"L16",area:120,vista:"Calle",frente:6,largo:20,usd:37350,pen:130725},
+      {etapa:2,id:"L17",area:120,vista:"Calle",frente:6,largo:20,usd:37350,pen:130725},
+      {etapa:2,id:"L18",area:120,vista:"Esquina",frente:8,largo:15,usd:40220,pen:140770},
+      {etapa:2,id:"L19",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"L20",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"L21",area:90,vista:"Calle",frente:6,largo:15,usd:28150,pen:98525},
+      {etapa:2,id:"M1",area:108,vista:"Esquina",frente:6,largo:18,usd:35130,pen:122955},
+      {etapa:2,id:"M2",area:108,vista:"Calle",frente:6,largo:18,usd:33650,pen:117775},
+      {etapa:2,id:"M3",area:108,vista:"Calle",frente:6,largo:18,usd:33650,pen:117775},
+      {etapa:2,id:"M4",area:108,vista:"Calle",frente:6,largo:18,usd:33650,pen:117775},
+      {etapa:2,id:"M5",area:108,vista:"Calle",frente:6,largo:18,usd:33650,pen:117775},
+      {etapa:2,id:"M6",area:108,vista:"Calle",frente:6,largo:18,usd:33650,pen:117775},
+      {etapa:2,id:"M7",area:108,vista:"Calle",frente:6,largo:18,usd:33650,pen:117775},
+      {etapa:2,id:"M8",area:108,vista:"Calle",frente:6,largo:18,usd:33650,pen:117775},
+      {etapa:2,id:"M9",area:216,vista:"Calle",frente:12,largo:18,usd:66000,pen:231000},
+      {etapa:2,id:"M12",area:133.65,vista:"Esquina",frente:9,largo:16.71,usd:44710,pen:156485},
+      {etapa:2,id:"M13",area:126.4,vista:"Calle",frente:7.56,largo:16.71,usd:39380,pen:137830},
+      {etapa:2,id:"M14",area:126.4,vista:"Calle",frente:7.56,largo:16.71,usd:39380,pen:137830},
+      {etapa:2,id:"M15",area:133.65,vista:"Esquina",frente:8,largo:16.71,usd:43300,pen:151550}
+    ]}
+};
+
+// ── FACTORES DE FINANCIAMIENTO (TEA 22%) ──
+const FACTORES = {
+  6:0.17654814, 12:0.09265880, 18:0.06478760, 24:0.05092060, 36:0.03718945,
+  42:0.03332373, 48:0.03045741, 60:0.02652213, 72:0.02398226, 84:0.02223677,
+  96:0.02098486, 108:0.02005920, 120:0.01935923
+};
+const MESES_OPCIONES = [6,12,18,24,36,42,48,60,72,84,96,108,120];
+
+// ── HELPERS ──
+function fmt(n){return Number(n).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function S(){return moneda==='PEN'?'S/':'$';}
+function precioBase(lot){return moneda==='PEN'?lot.pen:lot.usd;}
+function precio(lot,custom){return custom>0?custom:precioBase(lot);}
+function fmtFecha(d){
+  const M=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  return d.getDate()+' de '+M[d.getMonth()]+' de '+d.getFullYear();
+}
+
+// ── ESTADO ──
+let activeProject=null, moneda='PEN';
+let etapa1Desbloqueada=false;
+let campanaActiva=false; // CAMPAÑA 2026-4
+const TASA_MENSUAL_CAMP = Math.pow(1.22,1/12)-1;
+
+function campanaCondiciones(pct){
+  if(!campanaActiva) return null;
+  if(pct>=0.30) return {maxMeses:48, siCuotas:18, label:'🎯 Campaña 2026-4 · 30%+ → hasta 48 cuotas, primeras 18 SIN interés'};
+  if(pct>=0.20) return {maxMeses:60, siCuotas:12, label:'🎯 Campaña 2026-4 · 20-29.99% → hasta 60 cuotas, primeras 12 SIN interés'};
+  if(pct>=0.10) return {maxMeses:84, siCuotas:6, label:'🎯 Campaña 2026-4 · 10-19.99% → hasta 84 cuotas, primeras 6 SIN interés'};
+  return null;
+}
+// Calcula la cuota de un plazo bajo la campaña. Devuelve {cuota, cuota2, nSin, nCon} o null si el plazo excede el máximo.
+function campanaCuota(saldo, meses, camp){
+  if(!camp || saldo<=0 || meses<=0) return null;
+  if(meses>camp.maxMeses) return {excede:true, maxMeses:camp.maxMeses};
+  if(camp.siCuotas==='todas'){
+    return {excede:false, tipo:'todas', cuota:saldo/meses, nCuotas:meses};
+  }
+  const nSin=Math.min(camp.siCuotas,meses);
+  const cuotaSin=saldo/meses;
+  const saldoRest=saldo-cuotaSin*nSin;
+  const nCon=meses-nSin;
+  if(nCon>0&&saldoRest>0){
+    const cuotaCon=saldoRest*TASA_MENSUAL_CAMP/(1-Math.pow(1+TASA_MENSUAL_CAMP,-nCon));
+    return {excede:false, tipo:'mixto', cuotaSin:cuotaSin, nSin:nSin, cuotaCon:cuotaCon, nCon:nCon};
+  }
+  return {excede:false, tipo:'todas', cuota:cuotaSin, nCuotas:meses};
+}
+let loteSlots=[];
+const maxSlots=3;
+const PASS_ETAPA1='1301';
+
+function toggleCampana(chk){
+  campanaActiva=chk.checked;
+  const badge=document.getElementById('campana-badge');
+  if(badge) badge.style.display=chk.checked?'block':'none';
+  renderAllSlots();
+}
+
+function toggleEtapa1(chk){
+  if(chk.checked){
+    const pass=prompt('Ingresa la contraseña para desbloquear la 1era etapa:');
+    if(pass===PASS_ETAPA1){
+      etapa1Desbloqueada=true;
+      document.getElementById('etapa1-badge').style.display='block';
+      loteSlots.forEach(function(_,i){renderSlotSelector(i);});
+    } else { alert('Contraseña incorrecta.'); chk.checked=false; }
+  } else { desactivarEtapa1(); }
+}
+function desactivarEtapa1(){
+  etapa1Desbloqueada=false;
+  const chk=document.getElementById('chk-etapa1');
+  if(chk) chk.checked=false;
+  document.getElementById('etapa1-badge').style.display='none';
+  loteSlots.forEach(function(s){
+    if(s.lotId){
+      const lot=DATA.pdm&&DATA.pdm.lots.find(function(l){return l.id===s.lotId;});
+      if(activeProject==='pdm'&&lot&&lot.etapa===1){s.lotId='';s.ST={inicialMonto:0,precioCustom:0,opciones:[24,48,120]};}
+    }
+  });
+  loteSlots.forEach(function(_,i){renderSlotSelector(i);});
+  renderAllCards();
+}
+
+// cada slot: {lotId, ST:{inicialMonto, opciones:[m1,m2,m3]}}
+
+function setMoneda(m){
+  moneda=m; const th=activeProject||'bdn';
+  document.getElementById('btn-pen').className='mon-btn'+(m==='PEN'?' act-'+th:'');
+  document.getElementById('btn-usd').className='mon-btn'+(m==='USD'?' act-'+th:'');
+  renderAllCards();
+}
+function selectProject(p){
+  activeProject=p; loteSlots=[];
+  document.getElementById('tab-bdn').className='proj-tab'+(p==='bdn'?' bdn-active':'');
+  document.getElementById('tab-pdm').className='proj-tab'+(p==='pdm'?' pdm-active':'');
+  document.getElementById('btn-pen').className='mon-btn'+(moneda==='PEN'?' act-'+p:'');
+  document.getElementById('btn-usd').className='mon-btn'+(moneda==='USD'?' act-'+p:'');
+  document.getElementById('lotes-slots').innerHTML='';
+  addLoteSlot();
+  document.getElementById('card-container').innerHTML='<div class="empty-state"><p>Selecciona un lote en el panel</p></div>';
+  const eb=document.getElementById('export-btn-wrap'); if(eb) eb.remove();
+}
+
+function addLoteSlot(){
+  if(!activeProject){alert('Primero selecciona un proyecto');return;}
+  if(loteSlots.length>=maxSlots){alert('Máximo '+maxSlots+' lotes');return;}
+  const idx=loteSlots.length;
+  loteSlots.push({lotId:'',ST:{inicialMonto:0,precioCustom:0,opciones:[24,48,120]}});
+  renderSlotSelector(idx); updateAddBtn();
+}
+function removeLoteSlot(idx){
+  loteSlots.splice(idx,1);
+  document.getElementById('lotes-slots').innerHTML='';
+  loteSlots.forEach(function(_,i){renderSlotSelector(i);});
+  updateAddBtn(); renderAllCards();
+}
+function updateAddBtn(){
+  const btn=document.getElementById('btn-add-lote');
+  if(btn) btn.style.display=loteSlots.length>=maxSlots?'none':'';
+}
+
+function renderSlotSelector(idx){
+  const container=document.getElementById('lotes-slots');
+  let el=document.getElementById('slot-'+idx);
+  if(!el){el=document.createElement('div');el.id='slot-'+idx;container.appendChild(el);}
+  const proj=DATA[activeProject];
+  const opts=proj.lots.filter(function(l){
+    // Lotes de etapa 1 liberados individualmente (siempre cotizables sin desbloquear toda la etapa)
+    var lotesEtapa1Libres=['D1','D2','D3','D4','E9','G8','G9','G21','G22'];
+    if(activeProject==='pdm' && l.etapa===1 && !etapa1Desbloqueada && lotesEtapa1Libres.indexOf(l.id)<0) return false;
+    return true;
+  }).map(function(l){
+    const label=activeProject==='pdm'?'Etapa '+l.etapa+' — Lote '+l.id+' ('+l.area+' m²)':'Lote '+l.id+' ('+l.area+' m²)';
+    return '<option value="'+l.id+'"'+(loteSlots[idx].lotId===l.id?' selected':'')+'>'+label+'</option>';
+  }).join('');
+  el.innerHTML='<div style="background:#f7f9fc;border-radius:12px;padding:12px 14px;margin-bottom:10px;border:1.5px solid #e0e0e0;">'
+    +'<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">'
+    +'<div style="font-family:\'Montserrat\',sans-serif;font-weight:700;font-size:12px;color:var(--pb-dark);background:#e8e8f0;border-radius:20px;padding:3px 10px;">Lote '+(idx+1)+'</div>'
+    +'<select style="flex:1;min-width:200px;" onchange="onSlotLotChange('+idx+',this.value)">'
+    +'<option value="">— Selecciona un lote —</option>'+opts+'</select>'
+    +(idx>0?'<button onclick="removeLoteSlot('+idx+')" style="padding:5px 10px;border-radius:8px;border:1.5px solid #ddd;background:white;color:#aaa;cursor:pointer;font-size:11px;">✕</button>':'')
+    +'</div></div>';
+}
+
+function onSlotLotChange(idx,lotId){
+  loteSlots[idx].lotId=lotId;
+  loteSlots[idx].ST={inicialMonto:0,precioCustom:0,opciones:[24,48,120]};
+  renderAllCards();
+}
+
+function renderAllCards(){
+  const container=document.getElementById('card-container');
+  const active=loteSlots.filter(function(s){return s.lotId;});
+  if(!active.length){
+    container.innerHTML='<div class="empty-state"><p>Selecciona un lote en el panel</p></div>';
+    const eb=document.getElementById('export-btn-wrap'); if(eb) eb.remove(); return;
+  }
+  container.innerHTML='';
+  loteSlots.forEach(function(slot,i){
+    if(!slot.lotId) return;
+    const div=document.createElement('div'); div.id='card-slot-'+i; container.appendChild(div);
+  });
+  loteSlots.forEach(function(_,i){if(loteSlots[i].lotId) renderCard(i);});
+  let eb=document.getElementById('export-btn-wrap');
+  if(!eb){
+    eb=document.createElement('div'); eb.id='export-btn-wrap'; eb.className='export-bar';
+    eb.innerHTML='<button class="btn-export" onclick="exportPDF()">'
+      +'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">'
+      +'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>'
+      +'Exportar Simulación PDF</button>';
+    container.after(eb);
+  }
+}
+function renderAllSlots(){loteSlots.forEach(function(_,i){if(loteSlots[i].lotId) renderCard(i);});}
+
+// ── INPUT HANDLERS ──
+function slotInicialInput(idx,v){loteSlots[idx].ST.inicialMonto=parseFloat(v)||0; updateSlotCalc(idx);}
+function slotPrecioInput(idx,v){
+  if(!activeProject) return;
+  const lot=DATA[activeProject].lots.find(function(l){return l.id===loteSlots[idx].lotId;});
+  if(!lot) return;
+  const base=precioBase(lot);
+  const val=parseFloat(v)||0;
+  // Solo permitir precio mayor o igual al original
+  loteSlots[idx].ST.precioCustom=(val>base)?val:0;
+  updateSlotCalc(idx);
+}
+function slotMesOpcion(idx,opcion,meses){
+  loteSlots[idx].ST.opciones[opcion]=parseInt(meses);
+  updateSlotCalc(idx);
+}
+
+// ── RENDER CARD ──
+function renderCard(idx){
+  try{
+  const slot=loteSlots[idx]; if(!slot||!slot.lotId) return;
+  const proj=DATA[activeProject];
+  const lot=proj.lots.find(function(l){return l.id===slot.lotId;}); if(!lot) return;
+  const th=proj.theme, isBDN=th==='bdn', isPDM=th==='pdm';
+  const p=precio(lot,slot.ST.precioCustom), sx=S();
+  const precioOrig=precioBase(lot);
+  const pcClass=moneda==='PEN'?'moneda-pen':'moneda-usd';
+  const monedaLabel=moneda==='PEN'?'Soles (PEN)':'Dólares (USD)';
+
+  let extraSpecs='';
+  if(isPDM) extraSpecs='<div class="spec-item"><div class="spec-label">Frente</div><div class="spec-value">'+lot.frente+' m</div></div>'
+    +'<div class="spec-item"><div class="spec-label">Largo</div><div class="spec-value">'+lot.largo+' m</div></div>'
+    +'<div class="spec-item"><div class="spec-label">Etapa</div><div class="spec-value">'+lot.etapa+'</div></div>';
+
+  let ubicTag='';
+  if(isBDN&&lot.obs&&lot.obs!=='—') ubicTag='<div class="ubicacion-tag">'+lot.obs+'</div>';
+  else if(isPDM) ubicTag='<div class="ubicacion-tag">Vista: '+lot.vista+'</div>';
+
+  // Opciones de meses (3)
+  let opcionesHtml='';
+  for(let o=0;o<3;o++){
+    const mesesSel=slot.ST.opciones[o];
+    const mesBtns=MESES_OPCIONES.map(function(m){
+      return '<option value="'+m+'"'+(mesesSel===m?' selected':'')+'>'+m+' meses</option>';
+    }).join('');
+    opcionesHtml+='<div class="opcion-row">'
+      +'<span class="opcion-badge">Opción '+(o+1)+'</span>'
+      +'<select style="width:auto;min-width:130px;flex:0;" onchange="slotMesOpcion('+idx+','+o+',this.value)">'+mesBtns+'</select>'
+      +'<div class="opcion-result">'
+      +'<div><div class="meses-lbl">Cuota mensual</div><div class="cuota" id="cuota-'+idx+'-'+o+'">—</div></div>'
+      +'<div style="text-align:right;"><div class="meses-lbl" id="mesnum-'+idx+'-'+o+'">'+mesesSel+' meses</div></div>'
+      +'</div></div>';
+  }
+
+  const el=document.getElementById('card-slot-'+idx); if(!el) return;
+  el.innerHTML='<div class="lot-card card-'+th+'" style="margin-bottom:20px;">'
+    +'<div class="card-header">'
+    +'<div class="card-badge">'+proj.location+' · Lote '+(idx+1)+' de '+loteSlots.filter(function(s){return s.lotId;}).length+'</div>'
+    +'<div class="lote-id">Lote <span>'+lot.id+'</span></div>'
+    +'<div class="proj-label">'+proj.name+'</div>'
+    +'</div>'
+    +'<div class="card-body">'
+    +ubicTag
+    +'<div class="specs-grid">'
+    +'<div class="spec-item"><div class="spec-label">Área Total</div><div class="spec-value">'+lot.area+' m²</div></div>'
+    +extraSpecs
+    +'</div>'
+    +'<div class="precio-contado '+pcClass+'">'
+    +'<div class="pc-label">'+monedaLabel+' · Precio al contado</div>'
+    +'<div class="pc-amount" id="precio-display-'+idx+'">'+sx+' '+fmt(p)+'</div>'
+    +'<div style="margin-top:6px;display:flex;align-items:center;gap:6px;justify-content:center;">'
+    +'<span style="font-size:11px;opacity:.6;">✏️ Modificar precio:</span>'
+    +'<div style="position:relative;">'
+    +'<span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);font-weight:700;font-size:12px;color:var(--pb-dark);">'+sx+'</span>'
+    +'<input type="number" value="'+(slot.ST.precioCustom||p)+'" min="'+precioOrig+'" step="1"'
+    +' style="padding:5px 8px 5px 24px;border-radius:7px;border:1.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);font-size:12px;color:var(--pb-dark);width:140px;outline:none;"'
+    +' oninput="slotPrecioInput('+idx+',this.value)"/>'
+    +'</div></div>'
+    +'</div>'
+    +'<div class="fin-sep">'
+    +'<div class="fin-title">Simulación de Financiamiento</div>'
+    +'<div class="ini-section">'
+    +'<div style="font-family:\'Montserrat\',sans-serif;font-weight:700;font-size:12px;color:var(--pb-dark);margin-bottom:10px;">💰 Cuota Inicial</div>'
+    +'<div class="ini-row"><div class="ini-input-wrap">'
+    +'<span class="ini-sym">'+sx+'</span>'
+    +'<input type="number" id="ini-field-'+idx+'" value="'+(slot.ST.inicialMonto||'')+'" min="0" step="1"'
+    +' oninput="slotInicialInput('+idx+',this.value)" placeholder="Ingresa el monto inicial"/>'
+    +'</div><div id="pct-pill-'+idx+'" class="pct-pill neutral">—</div></div>'
+    +'<div id="saldo-bar-'+idx+'" class="saldo-bar" style="display:none;margin-top:10px;">'
+    +'<span class="sl">Saldo a financiar</span><span id="saldo-val-'+idx+'" class="sv"></span></div>'
+    +'</div>'
+    +'<div style="background:#f7f9fc;border-radius:12px;padding:10px 12px;margin-bottom:12px;">'
+    +'<div style="font-family:Montserrat,sans-serif;font-weight:700;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--pb-dark);margin-bottom:8px;">📊 Referencia de Iniciales</div>'
+    +'<div id="ref-grid-'+idx+'" style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px;"></div>'
+    +'</div>'
+    +'<div id="camp-tag-'+idx+'" style="display:none;background:#fef3c7;border:1.5px solid #f59e0b;border-radius:10px;padding:8px 12px;margin-bottom:10px;font-family:\'Montserrat\',sans-serif;font-weight:700;font-size:11px;color:#b45309;line-height:1.4;"></div>'
+    +'<div style="background:#f7f9fc;border-radius:12px;padding:12px 14px;">'
+    +'<div style="font-family:\'Montserrat\',sans-serif;font-weight:700;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--pb-dark);margin-bottom:10px;">📅 Opciones de plazo</div>'
+    +'<div id="opciones-wrap-'+idx+'">'+opcionesHtml+'</div>'
+    +'</div>'
+    +'</div>'
+    +'</div></div>';
+
+  updateSlotCalc(idx);
+  }catch(e){console.error('renderCard idx='+idx+':',e.message,e);}
+}
+
+function updateSlotCalc(idx){
+  const slot=loteSlots[idx]; if(!slot||!slot.lotId) return;
+  const proj=DATA[activeProject];
+  const lot=proj.lots.find(function(l){return l.id===slot.lotId;}); if(!lot) return;
+  const sx=S(), th=proj.theme;
+  const p=precio(lot,slot.ST.precioCustom);
+  const ini=slot.ST.inicialMonto||0;
+  const pct=p>0?ini/p:0;
+  const saldo=Math.max(0,p-ini);
+  const g=function(id){return document.getElementById(id);};
+
+  // Precio display (refleja precio modificado)
+  const pd=g('precio-display-'+idx);
+  if(pd) pd.textContent=sx+' '+fmt(p);
+
+  // % pill
+  const pill=g('pct-pill-'+idx);
+  if(pill){pill.textContent=ini>0?(pct*100).toFixed(1)+'%':'—';pill.className='pct-pill '+(ini>0?'ok-'+th:'neutral');}
+
+  // saldo bar
+  const sb=g('saldo-bar-'+idx), sv=g('saldo-val-'+idx);
+  if(sb&&sv){
+    if(ini>0&&saldo>0){sb.style.display='flex';sv.textContent=sx+' '+fmt(saldo);}
+    else sb.style.display='none';
+  }
+
+  // ref grid — referencia de iniciales
+  const rg=g('ref-grid-'+idx);
+  if(rg){
+    const refC=['#ffcc80','#b8c4f5','#90caf9','#4caf50','#4caf50'];
+    let rgHtml='';
+    [10,15,20,25,30].forEach(function(pc,i){
+      const amt=Math.ceil(p*pc/100);
+      rgHtml+='<div style="background:white;border-radius:8px;padding:7px 5px;text-align:center;border-top:3px solid '+refC[i]+';">'
+        +'<div style="font-family:Montserrat,sans-serif;font-weight:800;font-size:13px;color:#22285D;">'+pc+'%</div>'
+        +'<div style="font-size:10px;color:#888;margin-top:1px;">'+sx+' '+fmt(amt)+'</div>'
+        +'</div>';
+    });
+    rg.innerHTML=rgHtml;
+  }
+
+  // Campaña tag
+  const camp=campanaCondiciones(pct);
+  const ct=g('camp-tag-'+idx);
+  if(ct){
+    if(camp&&ini>0){ct.style.display='';ct.textContent=camp.label;}
+    else ct.style.display='none';
+  }
+
+  // Cada opción de meses
+  for(let o=0;o<3;o++){
+    const meses=slot.ST.opciones[o];
+    const cv=g('cuota-'+idx+'-'+o);
+    const mn=g('mesnum-'+idx+'-'+o);
+    if(camp){
+      const r=campanaCuota(saldo, meses, camp);
+      if(mn) mn.textContent=meses+' meses (máx. '+camp.maxMeses+')';
+      if(!r || r.excede){
+        if(cv) cv.innerHTML='<span style="font-size:11px;color:#dc2626;">máx. '+camp.maxMeses+' meses</span>';
+      } else if(r.tipo==='todas'){
+        if(cv) cv.innerHTML=sx+' '+fmt(r.cuota)+' <span style="font-size:9px;color:#16a34a;font-weight:700;">SIN interés</span>';
+      } else {
+        if(cv) cv.innerHTML='<span style="font-size:14px;">'+sx+' '+fmt(r.cuotaSin)+'</span> <span style="font-size:8px;color:#16a34a;font-weight:700;">x'+r.nSin+' s/int</span><br><span style="font-size:11px;color:#4338ca;">luego '+sx+' '+fmt(r.cuotaCon)+' x'+r.nCon+'</span>';
+      }
+    } else {
+      const factor=FACTORES[meses]||0;
+      const cuota=saldo>0?saldo*factor:0;
+      if(cv) cv.textContent=cuota>0?sx+' '+fmt(cuota):'—';
+      if(mn) mn.textContent=meses+' meses';
+    }
+  }
+}
+
+// ── EXPORTAR PDF ──
+function exportPDF(){
+  try{
+  if(!activeProject) return;
+  const proj=DATA[activeProject];
+  const isBDN=activeProject==='bdn', isPDM=activeProject==='pdm';
+  const TC_=isBDN?'#073752':'#103652';
+  const AC_=isBDN?'#3EB1C0':'#6AC3CC';
+  const sx=S();
+  const monedaLabel=moneda==='PEN'?'Soles (S/)':'Dólares ($)';
+  const monedaNombre=moneda==='PEN'?'Soles':'Dólares';
+  const hoy=new Date();
+  const vence=new Date(hoy); vence.setDate(hoy.getDate()+4);
+  const vendedorRaw=document.getElementById('vendedor-select').value;
+  const vparts=vendedorRaw?vendedorRaw.split('|'):['',''];
+  const vendNombre=vparts[0]||'', vendCel=vparts[1]||'';
+  const activeSlots=loteSlots.filter(function(s){return s.lotId;});
+  if(!activeSlots.length){alert('Selecciona al menos un lote');return;}
+
+  // ── Beneficios del proyecto ──
+  const beneficiosPDM=['✅ A 50 m de la carretera 🛣️','✅ Alta plusvalía 💰🚀','✅ Lotes desde 90 m² 📐',
+    '🔒 Pórtico de ingreso','🔒 Cerco perimétrico','✅ Predio inscrito en SUNARP 📝 (único dueño)',
+    '✅ Licencia de Habilitación Urbana Aprobada','✅ Obras Sanitarias 🚿 concluidas',
+    '✅ Obras Eléctricas ⚡ concluidas','✅ Parques, pistas y veredas en ejecución 👷🏻','✅ Entrega Fines de 2026 ✨'];
+  const beneficiosBDN=['✅ Vive en el campo sin alejarte de la ciudad','✅ A 5 min de Lambayeque y 10 de Chiclayo 🚗',
+    '✅ Lotes desde 300 m² 📐','🔒 Pórtico de ingreso','🌿 Cerco vivo perimétrico','✅ Alta plusvalía 📈💰',
+    '✅ Área social: zona de hamacas 🍃, parrillas 🥩, fogatas 🔥, juegos para niños 👨\u200d👦\u200d👦 y sala multiusos ✨'];
+  const beneficios=isBDN?beneficiosBDN:beneficiosPDM;
+  const beneficiosHtml='<div style="border-radius:9px;overflow:hidden;margin-bottom:8px;border:1.5px solid '+AC_+';">'
+    +'<div style="background:'+TC_+';padding:7px 12px;display:flex;align-items:center;gap:8px;">'
+    +'<div style="background:'+AC_+';border-radius:20px;padding:2px 9px;font-family:Arial,sans-serif;font-weight:700;font-size:8px;letter-spacing:.8px;text-transform:uppercase;color:'+TC_+';">🏡 Beneficios</div>'
+    +'<div style="font-family:Arial,sans-serif;font-weight:800;font-size:10px;color:white;">'+(isBDN?'Condominio Brisas de Naylamp':'Residencial Puerta del Mar')+'</div></div>'
+    +'<div style="background:white;padding:6px 8px;display:grid;grid-template-columns:repeat(2,1fr);gap:3px;">'
+    +beneficios.map(function(b){return '<div style="background:#f7f9fc;border-radius:4px;padding:4px 7px;border-left:3px solid '+AC_+';font-size:8px;color:#22285D;line-height:1.4;">'+b+'</div>';}).join('')
+    +'</div></div>';
+
+  // Cuentas
+  const cuentasBCP=moneda==='PEN'
+    ?{banco:'BCP',cuenta:'305-2055529-0-25',cci:'002-305-002055529025-11'}
+    :{banco:'BCP',cuenta:'305-2055532-1-66',cci:'002-305-002055532166-18'};
+  const cuentasBBVA=moneda==='PEN'
+    ?{banco:'BBVA',cuenta:'0011-0285-01-00197309',cci:'011-285-0001001973 09-46'}
+    :{banco:'BBVA',cuenta:'0011-0285-01-00200539',cci:'011-285-0001002005 39-43'};
+
+  function loteBlock(slot,slotNum){
+    const lot=proj.lots.find(function(l){return l.id===slot.lotId;}); if(!lot) return '';
+    const p=precio(lot,slot.ST.precioCustom);
+    const ini=slot.ST.inicialMonto||0;
+    const pct=p>0?ini/p:0;
+    const saldo=Math.max(0,p-ini);
+
+    let extraBoxes='';
+    if(isPDM) extraBoxes='<div style="background:#f5f5f5;border-radius:5px;padding:5px 8px;flex:1;min-width:55px;">'
+      +'<div style="font-size:7px;text-transform:uppercase;letter-spacing:.7px;color:#999;">Etapa</div>'
+      +'<div style="font-family:Arial,sans-serif;font-weight:700;font-size:11px;">'+lot.etapa+'</div></div>';
+
+    let ubicStr='';
+    if(isBDN&&lot.obs&&lot.obs!=='—') ubicStr='<div style="font-size:9px;color:#555;margin-bottom:4px;">'+lot.obs+'</div>';
+    if(isPDM) ubicStr='<div style="font-size:9px;color:#555;margin-bottom:4px;">Vista: '+lot.vista+'</div>';
+
+    // Filas de opciones
+    const campPdf=campanaCondiciones(pct);
+    let opcionesRows='';
+    for(let o=0;o<3;o++){
+      const meses=slot.ST.opciones[o];
+      let cuotaCell='', mesesCell=meses+' meses';
+      if(campPdf){
+        const r=campanaCuota(saldo, meses, campPdf);
+        if(!r||r.excede){
+          cuotaCell='<span style="font-size:10px;color:#dc2626;">excede máx. '+campPdf.maxMeses+'m</span>';
+        } else if(r.tipo==='todas'){
+          cuotaCell=sx+' '+fmt(r.cuota)+' <span style="font-size:8px;color:#16a34a;font-weight:700;">SIN INT.</span>';
+        } else {
+          cuotaCell=sx+' '+fmt(r.cuotaSin)+' <span style="font-size:7px;color:#16a34a;">x'+r.nSin+'</span> → '+sx+' '+fmt(r.cuotaCon)+' <span style="font-size:7px;color:#4338ca;">x'+r.nCon+'</span>';
+        }
+      } else {
+        const factor=FACTORES[meses]||0;
+        const cuota=saldo>0?saldo*factor:0;
+        cuotaCell=sx+' '+fmt(cuota);
+      }
+      opcionesRows+='<tr>'
+        +'<td style="padding:6px 10px;border-bottom:1px solid #eee;font-family:Arial,sans-serif;font-weight:700;font-size:11px;color:'+TC_+';">Opción '+(o+1)+'</td>'
+        +'<td style="padding:6px 10px;border-bottom:1px solid #eee;font-size:11px;color:#22285D;text-align:center;">'+mesesCell+'</td>'
+        +'<td style="padding:6px 10px;border-bottom:1px solid #eee;font-family:Arial,sans-serif;font-weight:900;font-size:12px;color:'+TC_+';text-align:right;">'+cuotaCell+'</td>'
+        +'</tr>';
+    }
+
+    return '<div style="border:1.5px solid '+AC_+';border-radius:9px;overflow:hidden;margin-bottom:10px;page-break-inside:avoid;">'
+      +'<div style="background:'+TC_+';padding:7px 13px;display:flex;align-items:center;gap:8px;">'
+      +'<span style="font-family:Arial,sans-serif;font-weight:900;font-size:12px;color:white;">LOTE '+lot.id+'</span>'
+      +'<span style="background:'+AC_+';color:'+TC_+';border-radius:20px;padding:2px 10px;font-family:Arial,sans-serif;font-weight:700;font-size:9px;">Lote '+slotNum+' de '+activeSlots.length+'</span>'
+      +'</div>'
+      +'<div style="padding:8px 11px;background:white;">'
+      +ubicStr
+      +'<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px;">'
+      +'<div style="background:#f5f5f5;border-radius:5px;padding:5px 8px;flex:1;min-width:60px;">'
+      +'<div style="font-size:7px;text-transform:uppercase;letter-spacing:.7px;color:#999;">Área Total</div>'
+      +'<div style="font-family:Arial,sans-serif;font-weight:700;font-size:12px;">'+lot.area+' m²</div></div>'
+      +extraBoxes
+      +'<div style="background:'+TC_+';border-radius:5px;padding:5px 8px;flex:1;min-width:80px;">'
+      +'<div style="font-size:7px;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.6);">Precio Contado</div>'
+      +'<div style="font-family:Arial,sans-serif;font-weight:700;font-size:13px;color:white;">'+sx+' '+fmt(p)+'</div></div>'
+      +'</div>'
+      // Inicial + saldo
+      +'<div style="display:flex;gap:5px;margin-bottom:6px;">'
+      +'<div style="flex:1;background:'+TC_+';border-radius:6px;padding:7px 11px;display:flex;justify-content:space-between;align-items:center;">'
+      +'<div><div style="font-size:7px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.5px;">Cuota Inicial</div>'
+      +'<div style="font-family:Arial,sans-serif;font-weight:900;font-size:15px;color:white;">'+sx+' '+fmt(ini)+'</div></div>'
+      +'<div style="background:'+AC_+';color:'+TC_+';border-radius:7px;padding:4px 10px;text-align:center;">'
+      +'<div style="font-size:6px;font-weight:600;text-transform:uppercase;">Inicial</div>'
+      +'<div style="font-family:Arial,sans-serif;font-weight:900;font-size:16px;line-height:1;">'+(pct*100).toFixed(1)+'%</div></div>'
+      +'</div>'
+      +'<div style="flex:1;background:#f5f5f5;border-radius:6px;padding:7px 11px;display:flex;flex-direction:column;justify-content:center;">'
+      +'<div style="font-size:7px;color:#888;text-transform:uppercase;letter-spacing:.5px;">Saldo a Financiar</div>'
+      +'<div style="font-family:Arial,sans-serif;font-weight:900;font-size:15px;color:#22285D;">'+sx+' '+fmt(saldo)+'</div></div>'
+      +'</div>'
+      // Tabla de opciones
+      +(campPdf?'<div style="font-weight:700;font-size:7px;letter-spacing:1px;text-transform:uppercase;color:#b45309;background:#fef3c7;border:1px solid #f59e0b;border-radius:5px;padding:3px 8px;margin:6px 0 4px;display:inline-block;">🎯 Campaña 2026-4 · '+campPdf.label.replace("🎯 Campaña 2026-4 · ","")+'</div>':'<div style="font-weight:700;font-size:7px;letter-spacing:1px;text-transform:uppercase;color:#22285D;margin:6px 0 4px;">Opciones de Financiamiento · TEA 22%</div>')
+      +'<table style="width:100%;border-collapse:collapse;">'
+      +'<thead><tr style="background:#f4f6ff;">'
+      +'<th style="padding:5px 10px;text-align:left;font-size:8px;color:#22285D;">Plazo</th>'
+      +'<th style="padding:5px 10px;text-align:center;font-size:8px;color:#22285D;">Meses</th>'
+      +'<th style="padding:5px 10px;text-align:right;font-size:8px;color:#22285D;">Cuota Mensual</th>'
+      +'</tr></thead><tbody>'+opcionesRows+'</tbody></table>'
+      +'</div></div>';
+  }
+
+  const lotesHtml=activeSlots.map(function(slot,i){return loteBlock(slot,i+1);}).join('');
+
+  const cuentasHtml='<div style="font-weight:700;font-size:8px;letter-spacing:1.2px;text-transform:uppercase;color:#22285D;margin:8px 0 5px;display:flex;align-items:center;gap:6px;">Cuentas Bancarias en '+monedaNombre+'<div style="flex:1;height:1px;background:#ddd;"></div></div>'
+    +'<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:5px;">'
+    +'<div style="flex:1;min-width:190px;background:#f5f5f5;border-radius:6px;padding:7px 11px;border-left:3px solid #0066cc;">'
+    +'<div style="font-weight:700;font-size:9px;color:#0066cc;margin-bottom:4px;">🏦 '+cuentasBCP.banco+'</div>'
+    +'<div style="font-size:7px;color:#999;text-transform:uppercase;">Cuenta '+monedaNombre+'</div>'
+    +'<div style="font-family:Arial,sans-serif;font-weight:700;font-size:11px;color:#22285D;">'+cuentasBCP.cuenta+'</div>'
+    +'<div style="font-size:7px;color:#999;text-transform:uppercase;">CCI</div>'
+    +'<div style="font-weight:600;font-size:10px;color:#555;">'+cuentasBCP.cci+'</div></div>'
+    +'<div style="flex:1;min-width:190px;background:#f5f5f5;border-radius:6px;padding:7px 11px;border-left:3px solid #004999;">'
+    +'<div style="font-weight:700;font-size:9px;color:#004999;margin-bottom:4px;">🏦 '+cuentasBBVA.banco+'</div>'
+    +'<div style="font-size:7px;color:#999;text-transform:uppercase;">Cuenta '+monedaNombre+'</div>'
+    +'<div style="font-family:Arial,sans-serif;font-weight:700;font-size:11px;color:#22285D;">'+cuentasBBVA.cuenta+'</div>'
+    +'<div style="font-size:7px;color:#999;text-transform:uppercase;">CCI</div>'
+    +'<div style="font-weight:600;font-size:10px;color:#555;">'+cuentasBBVA.cci+'</div></div>'
+    +'</div>'
+    +'<div style="font-size:8px;color:#888;margin-bottom:8px;">A nombre de: <strong>PORTADA BLANCA CONSTRUCTORA &amp; INMOBILIARIA</strong> · RUC: 20611225645</div>';
+
+  const footerHtml='<div style="padding-top:8px;border-top:1.5px solid #eee;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:8px;">'
+    +'<div style="font-size:8px;color:#888;line-height:1.8;">'
+    +'<div style="font-family:Arial,sans-serif;font-weight:700;font-size:9px;color:#22285D;">Portada Blanca Constructora &amp; Inmobiliaria</div>'
+    +'<div>Oficina Chiclayo: Calle María Izaga 778</div><div>Oficina Ferreñafe: Calle Bolívar 306</div>'
+    +'<div>📞 932 543 587 / 932 475 864</div></div>'
+    +'<div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">'
+    +(vendNombre?'<div style="font-size:8px;color:#888;font-style:italic;">Si tiene alguna consulta, contáctese con:</div>'
+      +'<div style="background:#f0f2f5;border:1.5px solid #b8c4f5;border-radius:7px;padding:7px 12px;text-align:right;">'
+      +'<div style="font-size:7px;color:#888;text-transform:uppercase;">Asesor Inmobiliario</div>'
+      +'<div style="font-family:Arial,sans-serif;font-weight:700;font-size:11px;color:#22285D;margin-bottom:4px;">'+vendNombre+'</div>'
+      +'<div style="font-family:Arial,sans-serif;font-weight:900;font-size:17px;color:#4519FF;">📞 '+vendCel+'</div></div>':'')
+    +'<div style="background:#f5f5f5;border-radius:7px;padding:6px 12px;text-align:center;">'
+    +'<div style="font-size:7px;color:#aaa;text-transform:uppercase;">Simulación válida hasta</div>'
+    +'<div style="font-family:Arial,sans-serif;font-weight:800;font-size:11px;color:#22285D;">'+fmtFecha(vence)+'</div></div>'
+    +'</div></div>';
+
+  const fullHTML='<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Simulación de Cuotas - Portada Blanca</title>'
+    +'<style>*{margin:0;padding:0;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact;}'
+    +'body{font-family:Arial,sans-serif;background:white;color:#22285D;padding:10px 14px;font-size:10px;line-height:1.4;}'
+    +'@media print{*{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}body{padding:4px 8px;}@page{size:A4 portrait;margin:5mm 6mm;}.no-print{display:none;}}'
+    +'</style></head><body>'
+    +'<div style="display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:7px;border-bottom:2.5px solid #22285D;margin-bottom:8px;">'
+    +'<div><div style="font-family:Arial,sans-serif;font-weight:900;font-size:14px;color:#22285D;">PORTADA BLANCA CONSTRUCTORA &amp; INMOBILIARIA</div>'
+    +'<div style="font-size:9px;color:#888;">RUC: 20611225645 · Simulación de Cuotas</div></div>'
+    +'<div style="text-align:right;font-size:9px;color:#888;line-height:1.7;">'
+    +'<div style="font-family:Arial,sans-serif;font-weight:700;font-size:11px;color:#22285D;">SIMULACIÓN DE CUOTAS</div>'
+    +'Fecha: '+fmtFecha(hoy)+' &nbsp;|&nbsp; Moneda: '+monedaLabel+'</div></div>'
+    +'<div style="background:'+TC_+';border-radius:8px;padding:7px 13px;margin-bottom:8px;display:flex;align-items:center;gap:10px;">'
+    +'<span style="font-family:Arial,sans-serif;font-weight:900;font-size:11px;color:white;">'+(isBDN?'CONDOMINIO BRISAS DE NAYLAMP — LAMBAYEQUE':'RESIDENCIAL PUERTA DEL MAR — PIMENTEL')+'</span>'
+    +'<span style="background:'+AC_+';color:'+TC_+';border-radius:20px;padding:2px 10px;font-family:Arial,sans-serif;font-weight:700;font-size:9px;">'+activeSlots.length+' lote'+(activeSlots.length>1?'s':'')+'</span></div>'
+    +beneficiosHtml
+    +lotesHtml
+    +cuentasHtml
+    +footerHtml
+    +'<div class="no-print" style="text-align:center;margin-top:16px;">'
+    +'<button onclick="window.print()" style="background:#4519FF;color:white;border:none;border-radius:8px;padding:10px 24px;font-family:Arial,sans-serif;font-weight:700;font-size:13px;cursor:pointer;">Guardar como PDF (Ctrl+P)</button>'
+    +'<p style="font-size:10px;color:#aaa;margin-top:6px;">Selecciona "Guardar como PDF" en el diálogo de impresión</p></div>'
+    +'</body></html>';
+
+  const win=window.open('','_blank');
+  win.document.write(fullHTML);
+  win.document.close();
+  setTimeout(function(){win.print();},800);
+  }catch(e){alert('Error: '+e.message);console.error(e);}
+}
+</script>
+</body>
+</html>
