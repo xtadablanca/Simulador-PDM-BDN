@@ -140,6 +140,19 @@ input[type=number]::-webkit-inner-spin-button{opacity:.4;}
 .regla-tag.nv3{background:#ede7f6;color:#4527a0;border:1.5px solid #ce93d8;}
 
 /* FRACCIONAR */
+.frac-wrap{margin-top:11px;background:white;border-radius:10px;padding:12px 14px;}
+.frac-label{font-size:11px;color:#888;margin-bottom:8px;}
+.frac-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;}
+.frac-btn{padding:5px 10px;border-radius:7px;border:1.5px solid #ddd;
+  font-family:'Montserrat',sans-serif;font-weight:600;font-size:11px;
+  cursor:pointer;background:white;color:#999;transition:all .15s;}
+.frac-btn:hover{border-color:var(--pb-dark);color:var(--pb-dark);}
+.frac-btn.sel-bdn{background:var(--bdn-teal);border-color:var(--bdn-teal);color:var(--bdn-navy);}
+.frac-btn.sel-pdm{background:var(--pdm-sky);border-color:var(--pdm-sky);color:var(--pdm-navy);}
+.frac-result{display:flex;justify-content:space-between;align-items:center;
+  background:#f7f9fc;border-radius:8px;padding:8px 12px;margin-top:6px;}
+.frac-result .fl{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.6px;}
+.frac-result .fv{font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;color:var(--pb-dark);}
 
 /* SALDO */
 .saldo-bar{border-radius:10px;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
@@ -325,6 +338,7 @@ footer strong{color:var(--pb-purple);}
           <option value="HUANCAS MUÑOZ MARIA KATHIA|932543587">Huancas Muñoz Maria Kathia</option>
           <option value="MEJIA CORTEZ MIRKO DAZU|956703298">Mejia Cortez Mirko Dazu</option>
           <option value="CHERO GASTULO JULIO ABEL|932475864">Chero Gastulo Julio Abel</option>
+          <option value="JOSE LUIS PALACIOS|954156896">Jose Luis Palacios</option>
         </select>
       </div>
     </div>
@@ -376,9 +390,9 @@ footer strong{color:var(--pb-purple);}
       <div id="campana-badge" style="display:none;margin-top:8px;background:#fffbeb;border:1.5px solid #f59e0b;border-radius:10px;padding:10px 14px;">
         <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;color:#b45309;margin-bottom:6px;">🎯 Campaña 2026-4 activa · condiciones:</div>
         <div style="font-size:10px;color:#78350f;line-height:1.7;">
-          • <strong>Inicial 30% o más</strong> → hasta <strong>48 cuotas</strong>, primeras <strong>18 SIN interés</strong> (resto TEA 22%)<br>
-          • <strong>Inicial 20% a 29.99%</strong> → hasta <strong>60 cuotas</strong>, primeras <strong>12 SIN interés</strong> (resto TEA 22%)<br>
-          • <strong>Inicial 10% a 19.99%</strong> → hasta <strong>72 cuotas (Brisas)</strong> / <strong>84 cuotas (Puerta del Mar)</strong>, primeras <strong>6 SIN interés</strong> (resto TEA 22%)
+          • <strong>Inicial 30% o más</strong> → hasta <strong>48 cuotas</strong>, todas SIN interés<br>
+          • <strong>Inicial 21% a 29%</strong> → hasta <strong>36 cuotas</strong>, todas SIN interés<br>
+          • <strong>Inicial 10% a 19%</strong> → hasta <strong>120 cuotas</strong>, primeras <strong>6 SIN interés</strong> (resto TEA 22%)
         </div>
       </div>
     </div>
@@ -413,6 +427,7 @@ const DATA={
       {id:"B10",area:300,obs:"—",usd:23486,pen:82200},
       {id:"B11",area:300,obs:"—",usd:23486,pen:82200},
       {id:"B13",area:300,obs:"CERCA AV INGRESO",usd:23486,pen:82200},
+      {id:"B14",area:300,obs:"CERCA AV INGRESO",usd:24057,pen:84200},
       {id:"B16",area:300,obs:"ESQUINA AV INGRESO",usd:24200,pen:84700},
       {id:"C3",area:300,obs:"B CERCA AV INGRESO",usd:23772,pen:83200},
       {id:"C6",area:300,obs:"—",usd:23629,pen:82700},
@@ -446,8 +461,7 @@ const DATA={
       {id:"F3",area:300.87,obs:"—",usd:24061,pen:84213},
       {id:"F4",area:307.34,obs:"—",usd:24087,pen:84303},
       {id:"F5",area:335.48,obs:"—",usd:26342,pen:92197},
-      {id:"F7",area:343.88,obs:"—",usd:26996,pen:94485},
-      {id:"F9",area:300,obs:"—",usd:24058,pen:84200}
+      {id:"F7",area:343.88,obs:"—",usd:26996,pen:94485}
     ]},
   pdm:{name:"Puerta del Mar",location:"Pimentel",theme:"pdm",
     lots:[
@@ -518,7 +532,7 @@ const DATA={
       {etapa:1,id:"G11",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
       {etapa:1,id:"G12",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
       {etapa:1,id:"G14",area:119.31,vista:"Esquina",frente:10.75,largo:11.1,usd:48490,pen:169715},
-      {etapa:1,id:"G15",area:94.34,vista:"Calle",frente:8.5,largo:11.1,usd:35143,pen:123000},
+      {etapa:1,id:"G15",area:94.34,vista:"Calle",frente:8.5,largo:11.1,usd:35070,pen:122745},
       {etapa:1,id:"G17",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
       {etapa:1,id:"G18",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
       {etapa:1,id:"G19",area:90,vista:"Calle",frente:6,largo:15,usd:33500,pen:117250},
@@ -563,7 +577,6 @@ const DATA={
       {etapa:2,id:"I12",area:108,vista:"Parque",frente:6,largo:18,usd:36250,pen:126875},
       {etapa:2,id:"I13",area:108,vista:"Parque",frente:6,largo:18,usd:36250,pen:126875},
       {etapa:2,id:"I14",area:108,vista:"Esquina",frente:6,largo:18,usd:36500,pen:127750},
-      {etapa:2,id:"J1",area:128.8,vista:"Esquina",frente:8,largo:16.1,usd:40186,pen:140650},
       {etapa:2,id:"J2",area:96.6,vista:"Calle",frente:6,largo:16.1,usd:30100,pen:105350},
       {etapa:2,id:"J6",area:96.6,vista:"Calle",frente:6,largo:16.1,usd:30100,pen:105350},
       {etapa:2,id:"K2",area:108,vista:"Calle",frente:6,largo:18,usd:35130,pen:122955},
@@ -649,12 +662,9 @@ const TASA_MENSUAL_CAMP = Math.pow(1.22,1/12)-1;
 
 function campanaCondiciones(pct){
   if(!campanaActiva) return null;
-  if(pct>=0.30) return {maxMeses:48, siCuotas:18, label:'🎯 Campaña 2026-4 · 30%+ → hasta 48 cuotas, primeras 18 SIN interés'};
-  if(pct>=0.20) return {maxMeses:60, siCuotas:12, label:'🎯 Campaña 2026-4 · 20-29.99% → hasta 60 cuotas, primeras 12 SIN interés'};
-  if(pct>=0.10){
-    var maxT = activeProject==='bdn' ? 72 : 84; // BDN hasta 72, PDM hasta 84
-    return {maxMeses:maxT, siCuotas:6, label:'🎯 Campaña 2026-4 · 10-19.99% → hasta '+maxT+' cuotas, primeras 6 SIN interés'};
-  }
+  if(pct>=0.30) return {maxMeses:48, siCuotas:'todas', label:'🎯 Campaña 2026-4 · 30%+ → hasta 48 cuotas SIN interés'};
+  if(pct>=0.21) return {maxMeses:36, siCuotas:'todas', label:'🎯 Campaña 2026-4 · 21-29% → hasta 36 cuotas SIN interés'};
+  if(pct>=0.10) return {maxMeses:120, siCuotas:6, label:'🎯 Campaña 2026-4 · 10-19% → hasta 120 cuotas, 6 primeras SIN interés'};
   return null;
 }
 // Calcula la cuota de un plazo bajo la campaña. Devuelve {cuota, cuota2, nSin, nCon} o null si el plazo excede el máximo.
