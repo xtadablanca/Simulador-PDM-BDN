@@ -338,7 +338,6 @@ footer strong{color:var(--pb-purple);}
           <option value="HUANCAS MUÑOZ MARIA KATHIA|932543587">Huancas Muñoz Maria Kathia</option>
           <option value="MEJIA CORTEZ MIRKO DAZU|956703298">Mejia Cortez Mirko Dazu</option>
           <option value="CHERO GASTULO JULIO ABEL|932475864">Chero Gastulo Julio Abel</option>
-          <option value="JOSE LUIS PALACIOS|954156896">Jose Luis Palacios</option>
         </select>
       </div>
     </div>
@@ -390,9 +389,9 @@ footer strong{color:var(--pb-purple);}
       <div id="campana-badge" style="display:none;margin-top:8px;background:#fffbeb;border:1.5px solid #f59e0b;border-radius:10px;padding:10px 14px;">
         <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;color:#b45309;margin-bottom:6px;">🎯 Campaña 2026-4 activa · condiciones:</div>
         <div style="font-size:10px;color:#78350f;line-height:1.7;">
-          • <strong>Inicial 30% o más</strong> → hasta <strong>48 cuotas</strong>, todas SIN interés<br>
-          • <strong>Inicial 21% a 29%</strong> → hasta <strong>36 cuotas</strong>, todas SIN interés<br>
-          • <strong>Inicial 10% a 19%</strong> → hasta <strong>120 cuotas</strong>, primeras <strong>6 SIN interés</strong> (resto TEA 22%)
+          • <strong>Inicial 30% o más</strong> → hasta <strong>48 cuotas</strong>,  primeras <strong>18 SIN interés</strong> (resto TEA 22%)<br>
+          • <strong>Inicial 20% a 29%</strong> → hasta <strong>60 cuotas</strong>,  primeras <strong>12 SIN interés</strong> (resto TEA 22%)s<br>
+          • <strong>Inicial 10% a 19%</strong> → hasta <strong>78 cuotas</strong>, primeras <strong>6 SIN interés</strong> (resto TEA 22%)
         </div>
       </div>
     </div>
@@ -662,9 +661,9 @@ const TASA_MENSUAL_CAMP = Math.pow(1.22,1/12)-1;
 
 function campanaCondiciones(pct){
   if(!campanaActiva) return null;
-  if(pct>=0.30) return {maxMeses:48, siCuotas:'todas', label:'🎯 Campaña 2026-4 · 30%+ → hasta 48 cuotas SIN interés'};
-  if(pct>=0.21) return {maxMeses:36, siCuotas:'todas', label:'🎯 Campaña 2026-4 · 21-29% → hasta 36 cuotas SIN interés'};
-  if(pct>=0.10) return {maxMeses:120, siCuotas:6, label:'🎯 Campaña 2026-4 · 10-19% → hasta 120 cuotas, 6 primeras SIN interés'};
+  if(pct>=0.30) return {maxMeses:48, siCuotas:'todas', label:'🎯 Campaña 2026-4 · 30%+ → hasta 48 cuotas, 18 primeras SIN interés'};
+  if(pct>=0.21) return {maxMeses:36, siCuotas:'todas', label:'🎯 Campaña 2026-4 · 20-29% → hasta 60 cuotas, 12 primeras SIN interés'};
+  if(pct>=0.10) return {maxMeses:120, siCuotas:6, label:'🎯 Campaña 2026-4 · 10-19% → hasta 78 cuotas, 6 primeras SIN interés'};
   return null;
 }
 // Calcula la cuota de un plazo bajo la campaña. Devuelve {cuota, cuota2, nSin, nCon} o null si el plazo excede el máximo.
